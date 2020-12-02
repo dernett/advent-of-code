@@ -1,16 +1,16 @@
 import sys, math, itertools
 
+def map_combs(lst, size, func, pred):
+    return map(func, filter(pred, itertools.combinations(lst, size)))
+
+def part_one(lst):
+    return next(map_combs(lst, 2, math.prod, lambda x: sum(x) == 2020), None)
+
+def part_two(lst):
+    return next(map_combs(lst, 3, math.prod, lambda x: sum(x) == 2020), None)
+
 def read_input(f):
-    return list(map(int, f.readlines()))
-
-def prod_combs(nums, size, pred):
-    return map(math.prod, filter(pred, itertools.combinations(nums, size)))
-
-def part_one(nums):
-    return next(prod_combs(nums, 2, lambda x: sum(x) == 2020), None)
-
-def part_two(nums):
-    return next(prod_combs(nums, 3, lambda x: sum(x) == 2020), None)
+    return [int(x) for x in f]
 
 if __name__ == '__main__':
     contents = read_input(sys.stdin)
