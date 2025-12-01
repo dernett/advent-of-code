@@ -1,0 +1,10 @@
+[workspace]
+resolver = "3"
+members = ["event-2025", "util"]
+
+[workspace.dependencies]
+anyhow = "1.0.100"
+ariadne = "0.6.0"
+chumsky = "0.11.2"
+indoc = "2.0.7"
+itertools = "0.14.0"

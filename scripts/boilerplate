@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+YEAR=$1
+DAY=$2
+DAY_PADDED=$(printf "%02d" $DAY)
+
+SOLUTION_FILE="event-${YEAR}/src/bin/day${DAY_PADDED}.rs"
+INPUT_FILE="event-${YEAR}/input/day${DAY_PADDED}.txt"
+
+# Retrieve session cookie from libsecret
+AOC_SESSION=$(secret-tool lookup service adventofcode)
+
+if [ ! -d "event-${YEAR}" ]; then
+    echo "Error: No directory for this year"
+    echo "Create it with: cargo new event-${YEAR}"
+    exit 1
+fi
+
+# Create src directory if it doesn't exist
+mkdir -p "event-${YEAR}/src/bin"
+
+if [ -f "$SOLUTION_FILE" ]; then
+    echo "Warning: Solution file already exists: $SOLUTION_FILE. Skipping"
+else
+    cat > "$SOLUTION_FILE" << EOF
+use anyhow::{Result, anyhow};
+use chumsky::prelude::*;
+use itertools::Itertools;
+use util::InputFile;
+
+#[derive(Debug)]
+struct Input;
+
+impl Input {
+    fn parse(file: &InputFile) -> Result<Self> {
+        Self::parser()
+            .parse(&file.contents)
+            .into_result()
+            .map_err(|errs| {
+                file.print_diagnostics(errs);
+                anyhow!("Failed to parse input file '{}'", file.path.display())
+            })
+    }
+
+    fn parser<'src>() -> impl Parser<'src, &'src str, Self, extra::Err<Rich<'src, char>>> {
+        unimplemented!();
+    }
+
+    fn part_one(&self) -> ! {
+        unimplemented!();
+    }
+
+    fn part_two(&self) -> ! {
+        unimplemented!();
+    }
+}
+
+fn main() -> Result<()> {
+    let input_file = InputFile::read("event-${YEAR}/input/day${DAY_PADDED}.txt")?;
+    let input = Input::parse(&input_file)?;
+
+    println!("{}", input.part_one());
+    println!("{}", input.part_two());
+
+    Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use indoc::indoc;
+
+    #[test]
+    fn example_works() {
+        let contents = indoc! {"
+        "};
+        let example = Input::parse(&contents.into()).unwrap();
+        assert_eq!(example.part_one(), unimplemented!());
+        assert_eq!(example.part_two(), unimplemented!());
+    }
+}
+EOF
+fi
+
+# Create input directory if it doesn't exist
+mkdir -p "event-${YEAR}/input"
+
+if [ -f "$INPUT_FILE" ]; then
+    echo "Warning: Input file already exists: $INPUT_FILE. Skipping"
+elif [ -z "$AOC_SESSION" ]; then
+    echo "Warning: Session cookie not found in libsecret. Skipping"
+    echo "Store it with: secret-tool store --label='Advent of Code Session' service adventofcode"
+else
+    # Download input using cookies from browser
+    # Assumes session cookie is stored in AOC_SESSION environment variable
+    curl -b "session=${AOC_SESSION}" \
+         -o "$INPUT_FILE" \
+         "https://adventofcode.com/${YEAR}/day/${DAY}/input"
+fi
+

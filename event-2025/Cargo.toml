@@ -1,0 +1,12 @@
+[package]
+name = "event-2025"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = { workspace = true }
+ariadne = { workspace = true }
+chumsky = { workspace = true }
+indoc = { workspace = true }
+itertools = { workspace = true }
+util = { path = "../util" }
