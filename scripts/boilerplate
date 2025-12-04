@@ -43,15 +43,15 @@ impl Input {
     }
 
     fn parser<'src>() -> impl Parser<'src, &'src str, Self, extra::Err<Rich<'src, char>>> {
-        unimplemented!();
+        todo!();
     }
 
     fn part_one(&self) -> ! {
-        unimplemented!();
+        todo!();
     }
 
     fn part_two(&self) -> ! {
-        unimplemented!();
+        todo!();
     }
 }
 
@@ -75,8 +75,8 @@ mod tests {
         let contents = indoc! {"
         "};
         let example = Input::parse(&contents.into()).unwrap();
-        assert_eq!(example.part_one(), unimplemented!());
-        assert_eq!(example.part_two(), unimplemented!());
+        assert_eq!(example.part_one(), todo!());
+        assert_eq!(example.part_two(), todo!());
     }
 }
 EOF
