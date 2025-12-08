@@ -6,6 +6,8 @@ use std::fs;
 use std::path::Path;
 use std::str::FromStr;
 
+pub mod collections;
+
 pub struct InputFile {
     pub path: OsString,
     pub contents: String,
