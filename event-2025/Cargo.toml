@@ -7,6 +7,7 @@ edition = "2024"
 anyhow = { workspace = true }
 ariadne = { workspace = true }
 chumsky = { workspace = true }
+good_lp = { workspace = true }
 indoc = { workspace = true }
 itertools = { workspace = true }
 util = { path = "../util" }
