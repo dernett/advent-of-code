@@ -4,7 +4,7 @@ use util::InputFile;
 
 #[derive(Debug)]
 struct Input {
-    shapes: Vec<[String; 3]>,
+    _shapes: Vec<[String; 3]>,
     regions: Vec<(usize, usize, Vec<usize>)>,
 }
 
@@ -55,33 +55,16 @@ impl Input {
 
         shapes
             .then(regions)
-            .map(|(shapes, regions)| Self { shapes, regions })
+            .map(|(_shapes, regions)| Self { _shapes, regions })
     }
 
     fn part_one(&self) -> usize {
-        let num_shapes = self.shapes.len();
-
-        let shape_counts = self
-            .shapes
-            .iter()
-            .map(|shape| {
-                shape
-                    .iter()
-                    .map(|row| row.chars().filter(|&c| c == '#').count())
-                    .sum::<usize>()
-            })
-            .collect::<Vec<_>>();
-
         let mut total = 0;
 
         for (w, h, quantities) in &self.regions {
-            let count = quantities
-                .iter()
-                .zip(shape_counts.iter())
-                .map(|(quantity, shape_count)| quantity * shape_count)
-                .sum::<usize>();
+            let count: usize = quantities.iter().sum();
 
-            if count <= w * h && (w / 3) * (h / 3) >= num_shapes {
+            if count <= (w / 3) * (h / 3) {
                 total += 1;
             }
         }
